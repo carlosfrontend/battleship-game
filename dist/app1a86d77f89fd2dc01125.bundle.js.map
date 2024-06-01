@@ -1,0 +1,1 @@
+{"version":3,"file":"app1a86d77f89fd2dc01125.bundle.js","mappings":"mBAEAA,QAAQC,IAAI,e","sources":["webpack://template/./src/index.js"],"sourcesContent":["import './css/style.css';\n\nconsole.log('Hello World!');\n"],"names":["console","log"],"sourceRoot":""}

@@ -12,13 +12,13 @@ module.exports = {
     ],
   },
   entry: {
-    app: './src/index.js',
+    battleship: './src/index.js',
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
       favicon: 'favicon.svg',
-      title: '',
+      title: 'Battleship Game',
       inject: 'body',
     }),
     new MiniCssExtractPlugin({

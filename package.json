@@ -1,5 +1,5 @@
 {
-  "name": "template",
+  "name": "battleship",
   "version": "1.0.0",
   "description": "Template description",
   "private": true,
@@ -16,7 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/carlosfrontend/battleship-game.git"
   },
-  "keywords": [],
+  "keywords": ["testing", "jest", "javascript"],
   "author": "carlosfrontend",
   "license": "ISC",
   "bugs": {

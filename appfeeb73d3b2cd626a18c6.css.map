@@ -1,1 +1,0 @@
-{"version":3,"file":"appfeeb73d3b2cd626a18c6.css","mappings":"AAAA,EAGE,qBAAsB,CADtB,QAAS,CADT,SAGF","sources":["webpack://template/./src/css/style.css"],"sourcesContent":["* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\n"],"names":[],"sourceRoot":""}

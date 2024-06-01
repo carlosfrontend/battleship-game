@@ -1,0 +1,1 @@
+{"version":3,"file":"battleship74cde273f81630e1a869.css","mappings":"AAAA,EAGE,qBAAsB,CADtB,QAAS,CADT,SAGF","sources":["webpack://battleship/./src/css/style.css"],"sourcesContent":["* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box;\n}\n"],"names":[],"sourceRoot":""}

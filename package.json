@@ -8,8 +8,8 @@
     "start": "webpack serve --open --config web.dev.cjs",
     "build": "webpack --config web.prod.cjs",
     "test": "jest --watchAll",
-    "lint": "eslint .",
-    "lint-fix": "eslint . --fix",
+    "lint": "eslint ./src/**.js",
+    "lint-fix": "eslint ./src/**.js --fix",
     "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "repository": {

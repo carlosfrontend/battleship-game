@@ -2,7 +2,7 @@
 
 ## The Odin Project
 
-A simple description
+Implement the classic game ‘Battleship’
 
 Links:
 

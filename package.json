@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Template description",
   "private": true,
-  "type": "module",
   "scripts": {
     "start": "webpack serve --open --config web.dev.cjs",
     "build": "webpack --config web.prod.cjs",

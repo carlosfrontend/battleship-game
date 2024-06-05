@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Template description",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "webpack serve --open --config web.dev.cjs",
     "build": "webpack --config web.prod.cjs",
@@ -15,7 +16,11 @@
     "type": "git",
     "url": "git+https://github.com/carlosfrontend/battleship-game.git"
   },
-  "keywords": ["testing", "jest", "javascript"],
+  "keywords": [
+    "testing",
+    "jest",
+    "javascript"
+  ],
   "author": "carlosfrontend",
   "license": "ISC",
   "bugs": {

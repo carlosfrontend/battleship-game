@@ -2,8 +2,8 @@ const Ship = (len) => {
   let sunk = false;
   let hits = 0;
  
-  const getNumberOfHints = () => hits;
-  const giveAHit = () => {
+  const getNumberOfHits = () => hits;
+  const hit = () => {
     hits += 1;
   };
 
@@ -15,7 +15,7 @@ const Ship = (len) => {
     return sunk;
   };
  
-  return { len, giveAHit, getNumberOfHints, isSunk };
+  return { len, hit, getNumberOfHits, isSunk };
 };
 
 export default Ship;

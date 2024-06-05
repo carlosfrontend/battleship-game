@@ -5,7 +5,6 @@ const Ship = (len) => {
   const getNumberOfHints = () => hits;
   const giveAHit = () => {
     hits += 1;
-    return hits;
   };
 
   const isSunk = () => {

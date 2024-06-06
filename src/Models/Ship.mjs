@@ -3,16 +3,22 @@ const Ship = (len) => {
   let hits = 0;
  
   const getNumberOfHits = () => hits;
-  const hit = () => {
-    hits += 1;
-  };
-
+ 
   const isSunk = () => {
-    if (len === hits) {
+    if (hits >= len) {
       sunk = true;
       return sunk;
     }
     return sunk;
+  };
+
+  const hit = () => {
+    // Only can hit if the ship not is sunk
+    if(!sunk){
+      hits += 1;
+      return isSunk();
+    }
+    return isSunk();
   };
  
   return { len, hit, getNumberOfHits, isSunk };

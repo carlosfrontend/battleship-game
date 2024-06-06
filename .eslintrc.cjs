@@ -31,11 +31,10 @@ module.exports = {
     indent: ['error', 2],
     // we want to avoid extraneous spaces
     'no-multi-spaces': ['error'],
-    'import/no-extraneous-dependencies': ['error', {'devDependencies': true, 'optionalDependencies': true, 'peerDependencies': true}]
-  },
-  "import/extensions": [
-    {
-     "mjs": "always"
-    }
-  ]
+    'import/no-extraneous-dependencies': ['error', {'devDependencies': true, 'optionalDependencies': true, 'peerDependencies': true}],
+    'import/extensions': ['error', 'always', {
+      js: 'never',
+      mjs: 'always',
+    }],
+  }
 };

@@ -21,11 +21,22 @@ describe('Testing Ship Factory', () => {
   });
 
   test('If a ship of length 4 receives 3 hits it continues floating', () =>{
-    const ship2 = Ship(4);
-    ship2.hit();
-    ship2.hit();
-    ship2.hit();
-    expect(ship2.isSunk()).toBeFalsy();
+    const ship3 = Ship(4);
+    ship3.hit();
+    ship3.hit();
+    ship3.hit();
+    expect(ship3.isSunk()).toBeFalsy();
+  });
+
+  test('If a ship of length 4 receives 4 or more hits, the number of hits received must be 4 because is sunk ', () =>{
+    const ship4 = Ship(4);
+    ship4.hit();
+    ship4.hit();
+    ship4.hit();
+    ship4.hit();
+    ship4.hit();
+    ship4.hit();
+    expect(ship4.getNumberOfHits()).toBe(4);
   });
   
 });

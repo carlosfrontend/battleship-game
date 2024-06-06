@@ -1,27 +1,34 @@
-const Ship = (len) => {
-  let sunk = false;
-  let hits = 0;
- 
-  const getNumberOfHits = () => hits;
- 
-  const isSunk = () => {
-    if (hits >= len) {
-      sunk = true;
-      return sunk;
-    }
-    return sunk;
-  };
+const Ship = (health) => {
+  let damage = 0;
+  let currentHealth = health;
+
+  const hasSunk = () => damage === health;
 
   const hit = () => {
-    // Only can hit if the ship not is sunk
-    if(!sunk){
-      hits += 1;
-      return isSunk();
+    
+    let msg = '';
+
+    if (!hasSunk()) {
+      damage += 1;
+      currentHealth -= 1;
+      return hasSunk();
     }
-    return isSunk();
+
+    msg += 'The ship you are trying to hit has already sank.';
+
+    return msg;
   };
- 
-  return { len, hit, getNumberOfHits, isSunk };
+
+  return {
+    get health() {
+      return currentHealth;
+    },
+    get damage() {
+      return damage;
+    },
+    hasSunk,
+    hit,
+  };
 };
 
 export default Ship;

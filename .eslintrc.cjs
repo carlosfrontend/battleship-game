@@ -31,6 +31,15 @@ module.exports = {
     indent: ['error', 2],
     // we want to avoid extraneous spaces
     'no-multi-spaces': ['error'],
+    "import/extensions": [
+      "never",
+      {
+        ignorePackages: true | false,
+        pattern: {
+          "js": "always"
+        }
+      }
+    ],
     'import/no-extraneous-dependencies': ['error', {'devDependencies': true, 'optionalDependencies': true, 'peerDependencies': true}]
   },
 };

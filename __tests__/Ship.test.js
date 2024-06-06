@@ -1,4 +1,4 @@
-import Ship from '../src/Models/Ship';
+import Ship from '../src/Models/Ship.mjs';
 
 
 describe('Testing Ship Factory', () => {

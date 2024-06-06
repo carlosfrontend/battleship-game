@@ -7,7 +7,7 @@
   "scripts": {
     "start": "webpack serve --open --config web.dev.cjs",
     "build": "webpack --config web.prod.cjs",
-    "test": "jest --watchAll",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll",
     "lint": "eslint ./src/**.js",
     "lint-fix": "eslint ./src/**.js --fix",
     "deploy": "git subtree push --prefix dist origin gh-pages"

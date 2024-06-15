@@ -1,4 +1,4 @@
-const Ship = (health) => {
+const Ship = (name, health) => {
   let damage = 0;
   let currentHealth = health;
 
@@ -20,6 +20,7 @@ const Ship = (health) => {
   };
 
   return {
+    name,
     get health() {
       return currentHealth;
     },

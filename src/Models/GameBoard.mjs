@@ -1,29 +1,48 @@
 const GameBoard = () => {
   const board = [];
-  const rows = 10;
-  const columns = 10;
+  const size = 10;
+
   const createBoard = () => {
-    for(let i = 0; i < rows; i+=1){
-      board.push([]);
-      for(let j = 0; j < columns; j+=1){
-        board[i].push({});
+    for (let i = 0; i < size; i += 1) {
+      board[i] = [];
+      for (let j = 0; j < size; j += 1) {
+        board[i][j] = 'water';
       }
     }
+    return board;
   };
-  const placeShip = (coord, axis, ship ) => {
-    const [x, y] = [...coord];
-    if(axis === 'y'){
-      for(let i = 0; i < ship.health; i+=1){
-        board[i][y] = ship;
-      }
-    }else if(axis === 'x'){
-     
-      for(let i = 0; i < ship.health; i+=1){
-        board[x][i] = ship;
-      }
+  
+  const isValid = (pos, ship, orientation) => {
+    if (orientation === 'horizontal' && pos[0] < 0 || pos[0] > size - 1 || pos[1] < 0 || pos[1] > ship.health) {
+      return false;
     }
+    return true;
   };
-  return {createBoard, placeShip, get board(){return board;}};
+  const placeShip = (ship, coord, orientation) => {
+    const msg = 'Error!';
+    console.log(isValid(coord,ship,orientation));
+    const x = coord[0];
+    const y = coord[1];
+
+    if (orientation === 'horizontal' && isValid(coord,ship,orientation)) {
+      board[x][y] = ship;
+      for (let i = 1; i < ship.health; i += 1) {
+        board[x][y + i] = ship;
+      }
+    } else {
+      return msg;
+    }
+
+    return board;
+  };
+
+  return {
+    createBoard,
+    placeShip,
+    get board() {
+      return board;
+    },
+  };
 };
 
 export default GameBoard;

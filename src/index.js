@@ -5,6 +5,6 @@ import GameBoard from './Models/GameBoard.mjs';
 
 const oceanBoard = GameBoard();
 oceanBoard.createBoard();
-console.log(oceanBoard.placeShip(carrier, [9,4], 'horizontal'));
+console.log(oceanBoard.placeShip(carrier, [9,0], 'horizontal'));
 console.table(oceanBoard.board);
 

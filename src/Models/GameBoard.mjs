@@ -19,8 +19,8 @@ const GameBoard = () => {
     return true;
   };
   const placeShip = (ship, coord, orientation) => {
-    const msg = 'Error!';
-    console.log(isValid(coord,ship,orientation));
+    let msg = 'Error!';
+    // console.log(isValid(coord,ship,orientation));
     const x = coord[0];
     const y = coord[1];
 
@@ -33,7 +33,8 @@ const GameBoard = () => {
       return msg;
     }
 
-    return board;
+    msg = 'Ship placed!';
+    return msg;
   };
 
   return {

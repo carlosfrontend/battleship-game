@@ -9,7 +9,10 @@
       href="https://fonts.googleapis.com/css2?family=Playwrite+US+Trad:wght@100..400&display=swap"
       rel="stylesheet"
     />
-    <link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Niramit:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Niramit:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
@@ -19,36 +22,83 @@
     <div id="game">
       <div class="player-container">
         <h3>Player</h3>
-       <div class="box">
-        <div class="letters-header"></div>
-       </div>
         <div class="box">
-          <div class="numbers-header"></div>
-        <div id="player-board">
-
+          <div class="letters-header">
+            <div class="letter-cell"></div>
+            <div class="letter-cell">A</div>
+            <div class="letter-cell">B</div>
+            <div class="letter-cell">C</div>
+            <div class="letter-cell">D</div>
+            <div class="letter-cell">E</div>
+            <div class="letter-cell">F</div>
+            <div class="letter-cell">G</div>
+            <div class="letter-cell">H</div>
+            <div class="letter-cell">I</div>
+            <div class="letter-cell">J</div>
+          </div>
         </div>
+        <div class="box">
+          <div class="numbers-header">
+            <div class="number-cell">1</div>
+            <div class="number-cell">2</div>
+            <div class="number-cell">3</div>
+            <div class="number-cell">4</div>
+            <div class="number-cell">5</div>
+            <div class="number-cell">6</div>
+            <div class="number-cell">7</div>
+            <div class="number-cell">8</div>
+            <div class="number-cell">9</div>
+            <div class="number-cell">10</div>
+          </div>
+          <div id="player-board"></div>
         </div>
       </div>
 
       <div class="computer-container">
         <h3>Computer</h3>
         <div class="box">
-          <div class="letters-header-2"></div>
-         </div>
-        <div class="box">
-          <div class="numbers-header-2"></div>
-          <div id="computer-board">
-
+          <div class="letters-header-2">
+            <div class="letter-cell"></div>
+            <div class="letter-cell">A</div>
+            <div class="letter-cell">B</div>
+            <div class="letter-cell">C</div>
+            <div class="letter-cell">D</div>
+            <div class="letter-cell">E</div>
+            <div class="letter-cell">F</div>
+            <div class="letter-cell">G</div>
+            <div class="letter-cell">H</div>
+            <div class="letter-cell">I</div>
+            <div class="letter-cell">J</div>
           </div>
         </div>
-
+        <div class="box">
+          <div class="numbers-header-2">
+            <div class="number-cell">1</div>
+            <div class="number-cell">2</div>
+            <div class="number-cell">3</div>
+            <div class="number-cell">4</div>
+            <div class="number-cell">5</div>
+            <div class="number-cell">6</div>
+            <div class="number-cell">7</div>
+            <div class="number-cell">8</div>
+            <div class="number-cell">9</div>
+            <div class="number-cell">10</div>
+          </div>
+          <div id="computer-board"></div>
         </div>
       </div>
-
     </div>
-  <footer id="footer">
-    <a href="https://github.com/carlosfrontend" class="gh-link" target="_blank">Coded by <span class="author">Carlosfrontend</span></a>
-    <a href="https://github.com/carlosfrontend" target="_blank"><img class="gh-logo" src="" alt="github logo"/></a>
-  </footer>
+
+    <footer id="footer">
+      <a
+        href="https://github.com/carlosfrontend"
+        class="gh-link"
+        target="_blank"
+        >Coded by <span class="author">Carlosfrontend</span></a
+      >
+      <a href="https://github.com/carlosfrontend" target="_blank"
+        ><img class="gh-logo" src="" alt="github logo"
+      /></a>
+    </footer>
   </body>
 </html>

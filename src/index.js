@@ -1,6 +1,4 @@
-
 import Game from './Controllers/Game.mjs';
-
 import './css/style.css';
 import footerLogo from './img/ghlogo.png';
 

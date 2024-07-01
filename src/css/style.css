@@ -15,24 +15,30 @@ body {
   );
   overflow: hidden;
 }
+
 #header {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 10vh;
 }
+
+.messages-box {
+  display: flex;
+  justify-content: center;
+  height: auto;
+}
+.message {
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(37, 50, 50);
+  font-size: 1.8rem;
+  font-weight: 600;
+  height: 8vh;
+}
 h1.title {
   font-family: "Playwrite US Trad", cursive;
   font-size: 2.5rem;
   font-weight: 900;
-}
-
-.player-container h3, .computer-container h3 {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: 600;
-  font-style: normal;
-  color: #000000;
-  font-size: 1.4rem;
 }
 
 #footer {
@@ -83,12 +89,17 @@ span.author:hover {
 }
 
 .player-container,
-.computer-container {
-  height: 60vh;
+.computer-container,.player-counter,.computer-counter {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   flex-direction: column;
+}
+
+.player-title, .computer-title{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
 }
 
 #player-board,
@@ -102,18 +113,20 @@ span.author:hover {
   justify-items: stretch;
 }
 
-.box{
+.box {
   display: flex;
   flex-direction: row;
 }
 
-.numbers-header, .numbers-header-2{
+.numbers-header,
+.numbers-header {
   display: grid;
   grid-template-columns: 30px;
-  grid-template-rows: repeat(10,30px);
+  grid-template-rows: repeat(10, 30px);
   font-size: 1rem;
 }
-.letters-header, .letters-header-2{
+.letters-header,
+.letters-header {
   display: grid;
   grid-template-columns: repeat(11, 30px);
   grid-template-rows: 30px;
@@ -122,39 +135,66 @@ span.author:hover {
   justify-content: stretch;
 }
 
-.number-cell{
+.number {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.letter-cell{
+.letter {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.number-cell, .letter-cell{
-  color:rgb(255, 255, 255);
+.number,
+.letter {
+  color: rgb(255, 255, 255);
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1rem;
 }
 
-.p-cell {
-border:1px solid #ffffff;
-cursor: pointer;
-}
-
-.c-cell {
-  border: 1px solid #ffffff;
+.water {
+  background-color: rgba(8, 38, 83, 0.756);
   cursor: pointer;
-
 }
 
-.water{
-  background-color: rgba(8, 80, 148, 0.824);
-}
-
-.ship{
+.ship {
+  border: 1px solid #ffffff;
   background-color: #ffffff;
+}
+
+.missed {
+  border: 1px solid #ffffff;
+  background-color: gray;
+}
+
+.touched {
+  border: 1px solid #ffffff;
+  background-color: red;
+}
+
+.player-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.player-counter{
+  align-items: start;
+  gap:1em;
+  margin-top: 4em;
+}
+.computer-counter{
+  align-items: end;
+  gap:1em;
+  margin-top: 4em;
+}
+.counter{
+  display: flex;
+  gap:.5em;
+}
+.square{
+  height: 1em;
+  width: 1em;
+  background-color: #00ff0057;
 }

@@ -56,7 +56,8 @@ const Game = () => {
  
     
     const computerHandler = (e) => {
-      e.stopImmediatePropagation();
+      e.stopPropagation();
+      console.log(e.bubbles);
       if (e.target.closest('img')) {
         const cell = e.target;
         const attack = player.board.receiveAttack(+cell.getAttribute('x'), +cell.getAttribute('y'));
@@ -74,9 +75,9 @@ const Game = () => {
           cell.parentNode.disabled = true;
           // positions.shift();
           cell.src = impactIcon;
-          playerBoardDom.addEventListener('click', computerHandler, {once: true} );
+          playerBoardDom.addEventListener('click', computerHandler, {once: true, capture: false} );
           setTimeout(() => {
-            [...playerBoardDom.children][positions.shift()].firstChild.click();
+            [...playerBoardDom.children][positions.shift()].firstElementChild.click();
           }, 800);
 
         }
@@ -84,9 +85,9 @@ const Game = () => {
           cell.parentNode.disabled = true;
           // positions.shift();
           cell.src = impactIcon;
-          playerBoardDom.addEventListener('click', computerHandler, {once: true} );
+          playerBoardDom.addEventListener('click', computerHandler, {once: true, capture: false} );
           setTimeout(() => {
-            [...playerBoardDom.children][positions.shift()].firstChild.click();
+            [...playerBoardDom.children][positions.shift()].firstElementChild.click();
           }, 800);
         }
 
@@ -94,9 +95,9 @@ const Game = () => {
           cell.parentNode.disabled = true;
           // positions.shift();
           cell.src = impactIcon;
-          playerBoardDom.addEventListener('click', computerHandler, {once: true} );
+          playerBoardDom.addEventListener('click', computerHandler, {once: true, capture: false} );
           setTimeout(() => {
-            [...playerBoardDom.children][positions.shift()].firstChild.click();
+            [...playerBoardDom.children][positions.shift()].firstElementChild.click();
           }, 800);
         }
 
@@ -109,13 +110,14 @@ const Game = () => {
       }
     };
     
-    playerBoardDom.addEventListener('click', computerHandler, {once: true});
-    [...playerBoardDom.children][positions.shift()].firstChild.click();
+    playerBoardDom.addEventListener('click', computerHandler, {once: true, capture:false});
+    [...playerBoardDom.children][positions.shift()].firstElementChild.click();
   };
 
   const playerAttack = () => {
     const playerHandler = (e) => {
-      e.stopImmediatePropagation();
+      e.stopPropagation();
+      console.log(e.bubbles);
       if (e.target.closest('img')) {
         const cell = e.target;
         const x = +cell.getAttribute('x');
@@ -147,6 +149,7 @@ const Game = () => {
         console.table(computerBoard);
         if(computer.board.allShipsSunk()){
           message.textContent = `${player.name} Wins !`;
+          computerBoardDom.removeEventListener('click', playerHandler);
         }
       }
     };

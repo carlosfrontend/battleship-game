@@ -1,10 +1,4 @@
-import {
-  battleship,
-  carrier,
-  destroyer,
-  patrolBoat,
-  submarine,
-} from './Ships.mjs';
+import {carrierPlayer, carrierComputer,battleshipPlayer,battleshipComputer,destroyerPlayer,destroyerComputer,submarinePlayer,submarineComputer,patrolBoatPlayer,patrolBoatComputer} from './Ships.mjs';
 
 const GameBoard = () => {
   const board = [];
@@ -80,11 +74,11 @@ const GameBoard = () => {
 
   const allShipsSunk = () => {
     if (
-      carrier.hasSunk() &&
-      battleship.hasSunk() &&
-      destroyer.hasSunk() &&
-      submarine.hasSunk() &&
-      patrolBoat.hasSunk()
+      carrierPlayer.hasSunk() &&
+      battleshipPlayer.hasSunk() &&
+      destroyerPlayer.hasSunk() &&
+      submarinePlayer.hasSunk() &&
+      patrolBoatPlayer.hasSunk() || carrierComputer.hasSunk &&battleshipComputer.hasSunk() && destroyerComputer.hasSunk() && submarineComputer.hasSunk() && patrolBoatComputer.hasSunk()
     ) {
       return true;
     }

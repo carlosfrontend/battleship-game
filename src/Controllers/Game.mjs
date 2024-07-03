@@ -1,11 +1,5 @@
 import Player from '../Models/Player.mjs';
-import {
-  battleship,
-  carrier,
-  destroyer,
-  patrolBoat,
-  submarine,
-} from '../Models/Ships.mjs';
+import {carrierPlayer, carrierComputer,battleshipPlayer,battleshipComputer,destroyerPlayer,destroyerComputer,submarinePlayer,submarineComputer,patrolBoatPlayer,patrolBoatComputer} from '../Models/Ships.mjs';
 import waterIcon from '../img/water.svg';
 import shipIcon from '../img/ship.svg';
 import missedIcon from '../img/shot.svg';
@@ -97,29 +91,19 @@ const Game = () => {
   // Convert the set to a numbers array
   const positions = Array.from(positionsSet).map((num) => +num);
 
-  const playerCarrier = carrier;
-  const playerBattleShip = battleship;
-  const playerDestroyer = destroyer;
-  const playerSubmarine = submarine;
-  const playerPatrolBoat = patrolBoat;
+ 
 
-  const computerCarrier = carrier;
-  const computerBattleShip = battleship;
-  const computerDestroyer = destroyer;
-  const computerSubmarine = submarine;
-  const computerPatrolBoat = patrolBoat;
+  player.board.placeShip(carrierPlayer, 0, 0, 'horizontal');
+  player.board.placeShip(battleshipPlayer, 4, 9, 'vertical');
+  player.board.placeShip(destroyerPlayer, 2, 6, 'vertical');
+  player.board.placeShip(submarinePlayer, 9, 2, 'horizontal');
+  player.board.placeShip(patrolBoatPlayer, 4, 3, 'vertical');
 
-  player.board.placeShip(playerCarrier, 0, 0, 'horizontal');
-  player.board.placeShip(playerBattleShip, 4, 9, 'vertical');
-  player.board.placeShip(playerDestroyer, 2, 6, 'vertical');
-  player.board.placeShip(playerSubmarine, 9, 2, 'horizontal');
-  player.board.placeShip(playerPatrolBoat, 4, 3, 'vertical');
-
-  computer.board.placeShip(computerCarrier, 1, 3, 'horizontal');
-  computer.board.placeShip(computerBattleShip, 3, 9, 'vertical');
-  computer.board.placeShip(computerDestroyer, 6, 6, 'vertical');
-  computer.board.placeShip(computerSubmarine, 5, 2, 'horizontal');
-  computer.board.placeShip(computerPatrolBoat, 2, 0, 'vertical');
+  computer.board.placeShip(carrierComputer, 1, 3, 'horizontal');
+  computer.board.placeShip(battleshipComputer, 3, 9, 'vertical');
+  computer.board.placeShip(destroyerComputer, 6, 6, 'vertical');
+  computer.board.placeShip(submarineComputer, 5, 2, 'horizontal');
+  computer.board.placeShip(patrolBoatComputer, 2, 0, 'vertical');
 
   const computerAttackHandler = (e) => {
     e.stopPropagation();

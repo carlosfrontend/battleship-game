@@ -1,9 +1,15 @@
 import Ship from './Ship.mjs';
 
-const carrier = Ship('Carrier', 5);
-const battleship = Ship('Battleship', 4);
-const destroyer = Ship('Destroyer', 3);
-const submarine = Ship('Submarine', 3);
-const patrolBoat = Ship('Patrol Boat', 2);
+const carrierPlayer = Ship('Carrier', 5);
+const battleshipPlayer = Ship('Battleship', 4);
+const destroyerPlayer = Ship('Destroyer', 3);
+const submarinePlayer = Ship('Submarine', 3);
+const patrolBoatPlayer = Ship('Patrol Boat', 2);
 
-export {carrier,battleship,destroyer,submarine,patrolBoat};
+const carrierComputer = Ship('Carrier', 5);
+const battleshipComputer = Ship('Battleship', 4);
+const destroyerComputer = Ship('Destroyer', 3);
+const submarineComputer = Ship('Submarine', 3);
+const patrolBoatComputer = Ship('Patrol Boat', 2);
+
+export {carrierPlayer, carrierComputer,battleshipPlayer,battleshipComputer,destroyerPlayer,destroyerComputer,submarinePlayer,submarineComputer,patrolBoatPlayer,patrolBoatComputer};

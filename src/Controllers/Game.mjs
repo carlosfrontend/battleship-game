@@ -1,38 +1,86 @@
-import Dom from '../Dom/Dom.mjs';
 import Player from '../Models/Player.mjs';
+import {
+  battleship,
+  carrier,
+  destroyer,
+  patrolBoat,
+  submarine,
+} from '../Models/Ships.mjs';
+import waterIcon from '../img/water.svg';
+import shipIcon from '../img/ship.svg';
 import missedIcon from '../img/shot.svg';
-import impactIcon from '../img/impact.svg';
+import touchedIcon from '../img/impact.svg';
 
 const Game = () => {
-  const computerBoardDom = document.querySelector('#computer-board');
   const playerBoardDom = document.querySelector('#player-board');
-  const message = document.querySelector('.message');
-
-  // Creates the players
+  const computerBoardDom = document.querySelector('#computer-board');
   const player = Player('Player');
   const computer = Player();
-
-  // Create the boards
   const playerBoard = player.createGameBoard();
   const computerBoard = computer.createGameBoard();
+  const playerData = [];
+  const computerData = [];
+  const coords = [];
+  let playerTurn = true;
+  let computerTurn = true;
+  const message = document.querySelector('.message');
 
-  // Shows the player titles
-  Dom().showPlayerTitles(player.name, computer.name);
+  const resetDom = () => {
+    playerBoardDom.innerHTML = '';
+    computerBoardDom.innerHTML = '';
+    for (let x = 0; x < 10; x += 1) {
+      for (let y = 0; y < 10; y += 1) {
+        playerData.push(playerBoard[x][y]);
+        computerData.push(computerBoard[x][y]);
+        coords.push([x, y]);
+      }
+    }
 
-  // Draw void boards
-  Dom().drawBoards();
+    for (let i = 0; i < 100; i += 1) {
+      const pCell = document.createElement('button');
+      const cCell = document.createElement('button');
 
-  // Place the ships
-  Dom().placePlayerShips(player);
+      if (playerData[i] === 'water') {
+        pCell.classList.add('water');
+        pCell.style.backgroundImage =` url(${waterIcon})`;
+      }
 
-  // Shows the player board
-  Dom().showPlayerBoard(playerBoard);
+      if (typeof playerData[i] === 'object') {
+        pCell.classList.add('water');
+        pCell.style.backgroundImage =` url(${shipIcon})`;
+      }
 
-  // Place the computer ships
-  Dom().placeComputerShips(computer);
+      if (playerData[i] === 'M') {
+        pCell.classList.add('water');
+        pCell.style.backgroundImage = `url(${waterIcon})`;
+      }
 
-  // Shows the computer board
-  Dom().showComputerBoard(computerBoard);
+      if (computerData[i] === 'water') {
+        cCell.classList.add('water');
+        cCell.style.backgroundImage = `url(${waterIcon})`;
+      }
+
+      if (typeof computerData[i] === 'object') {
+        cCell.classList.add('water');
+        cCell.style.backgroundImage = `url(${waterIcon})`;
+      }
+
+      if (computerData[i] === 'M') {
+        cCell.classList.add('water');
+        cCell.style.backgroundImage = `url(${waterIcon})`;
+      }
+
+      
+      playerBoardDom.append(pCell);
+      computerBoardDom.append(cCell);
+      [...playerBoardDom.children][i].setAttribute('x', coords[i][0]);
+      [...playerBoardDom.children][i].setAttribute('y', coords[i][1]);
+      [...computerBoardDom.children][i].setAttribute('x', coords[i][0]);
+      [...computerBoardDom.children][i].setAttribute('y', coords[i][1]);
+
+    }
+    console.log('Updated');
+  };
 
   // Function to generate a random number between 0 and 100 (both included)
   function getRandomNum() {
@@ -49,117 +97,94 @@ const Game = () => {
   }
 
   // Convert the set to a numbers array
-  const positions = Array.from(positionsSet).map(num => +num);
+  const positions = Array.from(positionsSet).map((num) => +num);
 
+  player.board.placeShip(carrier, 0, 0, 'horizontal');
+  player.board.placeShip(battleship, 4, 9, 'vertical');
+  player.board.placeShip(destroyer, 2, 6, 'vertical');
+  player.board.placeShip(submarine, 9, 2, 'horizontal');
+  player.board.placeShip(patrolBoat, 4, 3, 'vertical');
 
-  const computerAttack = () => {
+  computer.board.placeShip(carrier, 1, 3, 'horizontal');
+  computer.board.placeShip(battleship, 3, 9, 'vertical');
+  computer.board.placeShip(destroyer, 6, 6, 'vertical');
+  computer.board.placeShip(submarine, 5, 2, 'horizontal');
+  computer.board.placeShip(patrolBoat, 2, 0, 'vertical');
+
+  const computerAttackHandler = (e) => {
+    e.stopPropagation();   
+    if (e.target.closest('.water')) {
+      const x = +e.target.getAttribute('x');
+      const y = +e.target.getAttribute('y');
+      player.board.receiveAttack(x, y);
+      if (playerBoard[x][y] === 'M') {
+        computerTurn = false;
+        e.target.style.backgroundImage= '';
+        e.target.style.backgroundImage = `url(${missedIcon})`;
+        e.target.disabled = true;
+      } else if(playerBoard[x][y] !== 'M') {
+        [...e.currentTarget.children][positions.shift()].click();
+        computerTurn = true;
+        e.target.style.backgroundImage= '';
+        e.target.style.backgroundImage = `url(${touchedIcon})`;
+        e.target.disabled = true;
+        
+      }
+      
+      if (computerTurn) {
+        playerBoardDom.addEventListener('click', computerAttackHandler);
+      } else {
+        playerBoardDom.removeEventListener('click', computerAttackHandler);
+        computerBoardDom.addEventListener('click', playerAttackHandler);
+      }
+    }
+   
+  };
+
+  const playerAttackHandler = (e) => {
+    e.stopPropagation();
+    if(computer.board.allShipsSunk()){
+      message.textContent =`${player.name} Wins!`;
+      console.table(computerBoard);
+    }
+    const x = +e.target.getAttribute('x');
+    const y = +e.target.getAttribute('y');
+    if (e.target.closest('.water')) {
+      computer.board.receiveAttack(x, y);
+     
+      if (computerBoard[x][y] === 'M') {
+        playerTurn = false;
+        e.target.style.backgroundImage= '';
+        e.target.style.backgroundImage =` url(${missedIcon})`;
+        e.target.disabled = true;
+      } 
+      if(computerBoard[x][y] !== 'M') {
+        playerTurn = true;
+        e.target.style.backgroundImage= '';
+        e.target.style.backgroundImage =` url(${touchedIcon})`;
+        e.target.disabled = true;
+      }
+      if (playerTurn) {
+        computerBoardDom.addEventListener('click', playerAttackHandler);
+        
+      } else {
+        computerBoardDom.removeEventListener('click', playerAttackHandler);
+        playerBoardDom.addEventListener('click', computerAttackHandler);
+        [...playerBoardDom.children][positions.shift()].click();
+      }
+    }
+   
+  };
  
-    
-    const computerHandler = (e) => {
-      e.stopPropagation();
-      console.log(e.bubbles);
-      if (e.target.closest('img')) {
-        const cell = e.target;
-        const attack = player.board.receiveAttack(+cell.getAttribute('x'), +cell.getAttribute('y'));
+  resetDom();
+  computerBoardDom.addEventListener('click', playerAttackHandler);
 
-        if(attack === 'Missed'){
-          cell.parentNode.disabled = true;
-          cell.src = missedIcon;
-          playerBoardDom.removeEventListener('click', computerHandler);
-          message.textContent = `${player.name} turn`;
-          // eslint-disable-next-line no-use-before-define
-          playerAttack();
-        }
+ 
 
-        if (attack === false) {
-          cell.parentNode.disabled = true;
-          // positions.shift();
-          cell.src = impactIcon;
-          playerBoardDom.addEventListener('click', computerHandler, {once: true, capture: false} );
-          setTimeout(() => {
-            [...playerBoardDom.children][positions.shift()].firstElementChild.click();
-          }, 800);
-
-        }
-        if (attack === true) {
-          cell.parentNode.disabled = true;
-          // positions.shift();
-          cell.src = impactIcon;
-          playerBoardDom.addEventListener('click', computerHandler, {once: true, capture: false} );
-          setTimeout(() => {
-            [...playerBoardDom.children][positions.shift()].firstElementChild.click();
-          }, 800);
-        }
-
-        if (attack === 'The ship you are trying to hit has already sank.') {
-          cell.parentNode.disabled = true;
-          // positions.shift();
-          cell.src = impactIcon;
-          playerBoardDom.addEventListener('click', computerHandler, {once: true, capture: false} );
-          setTimeout(() => {
-            [...playerBoardDom.children][positions.shift()].firstElementChild.click();
-          }, 800);
-        }
-
-        console.log(cell);
-        console.log(player);
-        console.table(playerBoard);
-        if(player.board.allShipsSunk()){
-          message.textContent = `${computer.name} Wins!`;
-        }
-      }
-    };
-    
-    playerBoardDom.addEventListener('click', computerHandler, {once: true, capture:false});
-    [...playerBoardDom.children][positions.shift()].firstElementChild.click();
+  return {
+    player,
+    computer
   };
-
-  const playerAttack = () => {
-    const playerHandler = (e) => {
-      e.stopPropagation();
-      console.log(e.bubbles);
-      if (e.target.closest('img')) {
-        const cell = e.target;
-        const x = +cell.getAttribute('x');
-        const y = +cell.getAttribute('y');
-        const attack = computer.board.receiveAttack(x, y);
-        if (attack === 'Missed') {
-          cell.src = missedIcon;
-          cell.parentNode.disabled = true;
-          // Stop interaction
-          computerBoardDom.removeEventListener('click', playerHandler);
-          // Change turn to the computer
-          message.textContent = `${computer.name} turn`;
-          setTimeout(() => {
-            computerAttack();
-          }, 800);
-        }
-        if (attack === false || attack === true) {
-          cell.parentNode.disabled = true;
-          cell.src = impactIcon;
-        }
-
-        if(attack === 'The ship you are trying to hit has already sank.'){
-          cell.parentNode.disabled = true;
-          cell.src = impactIcon;
-        }
-
-        console.log(cell);
-        console.log(computer);
-        console.table(computerBoard);
-        if(computer.board.allShipsSunk()){
-          message.textContent = `${player.name} Wins !`;
-          computerBoardDom.removeEventListener('click', playerHandler);
-        }
-      }
-    };
-    
-    computerBoardDom.addEventListener('click', playerHandler);
-  };
-
-  // The Player starts the game
-  message.textContent = `${player.name} turn`;
-  playerAttack();
 };
 
 export default Game;

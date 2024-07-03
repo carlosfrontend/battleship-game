@@ -156,6 +156,7 @@ span.author:hover {
 
 .water {
   background-color: rgba(8, 38, 83, 0.756);
+  border: 1px solid #ffffff;
   cursor: pointer;
 }
 

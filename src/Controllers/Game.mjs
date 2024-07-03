@@ -42,12 +42,12 @@ const Game = () => {
 
       if (playerData[i] === 'water') {
         pCell.classList.add('water');
-        pCell.style.backgroundImage =` url(${waterIcon})`;
+        pCell.style.backgroundImage = ` url(${waterIcon})`;
       }
 
       if (typeof playerData[i] === 'object') {
         pCell.classList.add('water');
-        pCell.style.backgroundImage =` url(${shipIcon})`;
+        pCell.style.backgroundImage = ` url(${shipIcon})`;
       }
 
       if (playerData[i] === 'M') {
@@ -70,14 +70,12 @@ const Game = () => {
         cCell.style.backgroundImage = `url(${waterIcon})`;
       }
 
-      
       playerBoardDom.append(pCell);
       computerBoardDom.append(cCell);
       [...playerBoardDom.children][i].setAttribute('x', coords[i][0]);
       [...playerBoardDom.children][i].setAttribute('y', coords[i][1]);
       [...computerBoardDom.children][i].setAttribute('x', coords[i][0]);
       [...computerBoardDom.children][i].setAttribute('y', coords[i][1]);
-
     }
     console.log('Updated');
   };
@@ -99,38 +97,50 @@ const Game = () => {
   // Convert the set to a numbers array
   const positions = Array.from(positionsSet).map((num) => +num);
 
-  player.board.placeShip(carrier, 0, 0, 'horizontal');
-  player.board.placeShip(battleship, 4, 9, 'vertical');
-  player.board.placeShip(destroyer, 2, 6, 'vertical');
-  player.board.placeShip(submarine, 9, 2, 'horizontal');
-  player.board.placeShip(patrolBoat, 4, 3, 'vertical');
+  const playerCarrier = carrier;
+  const playerBattleShip = battleship;
+  const playerDestroyer = destroyer;
+  const playerSubmarine = submarine;
+  const playerPatrolBoat = patrolBoat;
 
-  computer.board.placeShip(carrier, 1, 3, 'horizontal');
-  computer.board.placeShip(battleship, 3, 9, 'vertical');
-  computer.board.placeShip(destroyer, 6, 6, 'vertical');
-  computer.board.placeShip(submarine, 5, 2, 'horizontal');
-  computer.board.placeShip(patrolBoat, 2, 0, 'vertical');
+  const computerCarrier = carrier;
+  const computerBattleShip = battleship;
+  const computerDestroyer = destroyer;
+  const computerSubmarine = submarine;
+  const computerPatrolBoat = patrolBoat;
+
+  player.board.placeShip(playerCarrier, 0, 0, 'horizontal');
+  player.board.placeShip(playerBattleShip, 4, 9, 'vertical');
+  player.board.placeShip(playerDestroyer, 2, 6, 'vertical');
+  player.board.placeShip(playerSubmarine, 9, 2, 'horizontal');
+  player.board.placeShip(playerPatrolBoat, 4, 3, 'vertical');
+
+  computer.board.placeShip(computerCarrier, 1, 3, 'horizontal');
+  computer.board.placeShip(computerBattleShip, 3, 9, 'vertical');
+  computer.board.placeShip(computerDestroyer, 6, 6, 'vertical');
+  computer.board.placeShip(computerSubmarine, 5, 2, 'horizontal');
+  computer.board.placeShip(computerPatrolBoat, 2, 0, 'vertical');
 
   const computerAttackHandler = (e) => {
-    e.stopPropagation();   
+    e.stopPropagation();
     if (e.target.closest('.water')) {
       const x = +e.target.getAttribute('x');
       const y = +e.target.getAttribute('y');
       player.board.receiveAttack(x, y);
       if (playerBoard[x][y] === 'M') {
         computerTurn = false;
-        e.target.style.backgroundImage= '';
+        e.target.style.backgroundImage = '';
         e.target.style.backgroundImage = `url(${missedIcon})`;
         e.target.disabled = true;
-      } else if(playerBoard[x][y] !== 'M') {
-        [...e.currentTarget.children][positions.shift()].click();
+      } else {
+        [...playerBoardDom.children][positions.shift()].click();
         computerTurn = true;
-        e.target.style.backgroundImage= '';
+        e.target.style.backgroundImage = '';
         e.target.style.backgroundImage = `url(${touchedIcon})`;
         e.target.disabled = true;
-        
+     
       }
-      
+
       if (computerTurn) {
         playerBoardDom.addEventListener('click', computerAttackHandler);
       } else {
@@ -138,53 +148,47 @@ const Game = () => {
         computerBoardDom.addEventListener('click', playerAttackHandler);
       }
     }
-   
+    if (player.board.allShipsSunk()) {
+      message.textContent = `${computer.name} Wins!`;
+      console.table(playerBoard);
+    }
   };
 
   const playerAttackHandler = (e) => {
     e.stopPropagation();
-    if(computer.board.allShipsSunk()){
-      message.textContent =`${player.name} Wins!`;
-      console.table(computerBoard);
-    }
-    const x = +e.target.getAttribute('x');
-    const y = +e.target.getAttribute('y');
     if (e.target.closest('.water')) {
+      const x = +e.target.getAttribute('x');
+      const y = +e.target.getAttribute('y');
       computer.board.receiveAttack(x, y);
-     
       if (computerBoard[x][y] === 'M') {
         playerTurn = false;
-        e.target.style.backgroundImage= '';
-        e.target.style.backgroundImage =` url(${missedIcon})`;
+        e.target.style.backgroundImage = '';
+        e.target.style.backgroundImage = ` url(${missedIcon})`;
         e.target.disabled = true;
-      } 
-      if(computerBoard[x][y] !== 'M') {
+      } else {
         playerTurn = true;
-        e.target.style.backgroundImage= '';
-        e.target.style.backgroundImage =` url(${touchedIcon})`;
+        e.target.style.backgroundImage = '';
+        e.target.style.backgroundImage = ` url(${touchedIcon})`;
         e.target.disabled = true;
+        return;
       }
+
       if (playerTurn) {
         computerBoardDom.addEventListener('click', playerAttackHandler);
-        
       } else {
         computerBoardDom.removeEventListener('click', playerAttackHandler);
         playerBoardDom.addEventListener('click', computerAttackHandler);
         [...playerBoardDom.children][positions.shift()].click();
       }
+      if (computer.board.allShipsSunk()) {
+        message.textContent = `${player.name} Wins!`;
+        console.table(computerBoard);
+      }
     }
-   
   };
- 
+
   resetDom();
   computerBoardDom.addEventListener('click', playerAttackHandler);
-
- 
-
-  return {
-    player,
-    computer
-  };
 };
 
 export default Game;

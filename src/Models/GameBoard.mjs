@@ -74,15 +74,18 @@ const GameBoard = () => {
 
   const allShipsSunk = () => {
     if (
-      carrierPlayer.hasSunk() &&
+      (carrierPlayer.hasSunk() &&
       battleshipPlayer.hasSunk() &&
       destroyerPlayer.hasSunk() &&
       submarinePlayer.hasSunk() &&
-      patrolBoatPlayer.hasSunk() || carrierComputer.hasSunk &&battleshipComputer.hasSunk() && destroyerComputer.hasSunk() && submarineComputer.hasSunk() && patrolBoatComputer.hasSunk()
+      patrolBoatPlayer.hasSunk()) || (carrierComputer.hasSunk &&battleshipComputer.hasSunk() && destroyerComputer.hasSunk() && submarineComputer.hasSunk() && patrolBoatComputer.hasSunk())
     ) {
       return true;
     }
+  
+    
     return false;
+    
   };
 
   return {

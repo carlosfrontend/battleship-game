@@ -1,5 +1,5 @@
 import Ship from '../src/Models/Ship.mjs';
-import {carrierPlayer, carrierComputer,battleshipPlayer,battleshipComputer,destroyerPlayer,destroyerComputer,submarinePlayer,submarineComputer,patrolBoatPlayer,patrolBoatComputer} from '../src/Models/Ships.mjs';
+import { carrierComputer,battleshipComputer,destroyerComputer,submarineComputer,patrolBoatComputer} from '../src/Models/Ships.mjs';
 
 describe('Testing Ship Factory', () => {
   test('Ship factory should be defined', () => {

@@ -1,5 +1,5 @@
 import GameBoard from '../src/Models/GameBoard.mjs';
-import {carrierPlayer, carrierComputer,battleshipPlayer,battleshipComputer,destroyerPlayer,destroyerComputer,submarinePlayer,submarineComputer,patrolBoatPlayer,patrolBoatComputer} from '../src/Models/Ships.mjs';
+import {carrierPlayer, battleshipPlayer,destroyerPlayer,submarinePlayer,patrolBoatPlayer,} from '../src/Models/Ships.mjs';
 
 const oceanBoard = GameBoard();
 const mockBoard = GameBoard();

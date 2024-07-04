@@ -1,5 +1,16 @@
 import Player from '../Models/Player.mjs';
-import {carrierPlayer, carrierComputer,battleshipPlayer,battleshipComputer,destroyerPlayer,destroyerComputer,submarinePlayer,submarineComputer,patrolBoatPlayer,patrolBoatComputer} from '../Models/Ships.mjs';
+import {
+  carrierPlayer,
+  carrierComputer,
+  battleshipPlayer,
+  battleshipComputer,
+  destroyerPlayer,
+  destroyerComputer,
+  submarinePlayer,
+  submarineComputer,
+  patrolBoatPlayer,
+  patrolBoatComputer,
+} from '../Models/Ships.mjs';
 import waterIcon from '../img/water.svg';
 import shipIcon from '../img/ship.svg';
 import missedIcon from '../img/shot.svg';
@@ -71,7 +82,6 @@ const Game = () => {
       [...computerBoardDom.children][i].setAttribute('x', coords[i][0]);
       [...computerBoardDom.children][i].setAttribute('y', coords[i][1]);
     }
-    console.log('Updated');
   };
 
   // Function to generate a random number between 0 and 100 (both included)
@@ -90,8 +100,6 @@ const Game = () => {
 
   // Convert the set to a numbers array
   const positions = Array.from(positionsSet).map((num) => +num);
-
- 
 
   player.board.placeShip(carrierPlayer, 0, 0, 'horizontal');
   player.board.placeShip(battleshipPlayer, 4, 9, 'vertical');
@@ -122,13 +130,13 @@ const Game = () => {
         e.target.style.backgroundImage = '';
         e.target.style.backgroundImage = `url(${touchedIcon})`;
         e.target.disabled = true;
-     
       }
 
       if (computerTurn) {
         playerBoardDom.addEventListener('click', computerAttackHandler);
       } else {
         playerBoardDom.removeEventListener('click', computerAttackHandler);
+        // eslint-disable-next-line no-use-before-define
         computerBoardDom.addEventListener('click', playerAttackHandler);
       }
     }
@@ -154,6 +162,10 @@ const Game = () => {
         e.target.style.backgroundImage = '';
         e.target.style.backgroundImage = ` url(${touchedIcon})`;
         e.target.disabled = true;
+        if (computer.board.allShipsSunk()) {
+          message.textContent = `${player.name} Wins!`;
+          console.table(computerBoard);
+        }
         return;
       }
 
@@ -163,10 +175,6 @@ const Game = () => {
         computerBoardDom.removeEventListener('click', playerAttackHandler);
         playerBoardDom.addEventListener('click', computerAttackHandler);
         [...playerBoardDom.children][positions.shift()].click();
-      }
-      if (computer.board.allShipsSunk()) {
-        message.textContent = `${player.name} Wins!`;
-        console.table(computerBoard);
       }
     }
   };

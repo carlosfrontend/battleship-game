@@ -9,8 +9,6 @@ import shipWheelLogo from '../img/ship-wheel.svg';
 import movieRollLogo from '../img/movie-roll.svg';
 import powerOffLogo from '../img/power.svg';
 
-
-
 const Game = () => {
   const playerBoardDom = document.querySelector('#player-board');
   const computerBoardDom = document.querySelector('#computer-board');
@@ -18,9 +16,9 @@ const Game = () => {
   const computer = Player();
   const playerBoard = player.createGameBoard();
   const computerBoard = computer.createGameBoard();
-  const playerData = [];
+  let playerData = [];
   const computerData = [];
-  const coords = [];
+  let coords = [];
   let playerTurn = true;
   let computerTurn = true;
   const message = document.querySelector('.message');
@@ -45,7 +43,6 @@ const Game = () => {
   const placeForm = document.querySelector('#place-form');
   const resetUserForm = document.querySelector('#reset');
   const gameMode = document.querySelector('#game-opt');
-  
 
   settingsImg.src = settingsLogo;
   shipWheelImg.src = shipWheelLogo;
@@ -53,16 +50,13 @@ const Game = () => {
   powerOffImg.src = powerOffLogo;
   userDialog.showModal();
 
- 
-  
   playerTwoName.disabled = true;
-  
+
   gameMode.addEventListener('change', () => {
-    if(gameMode.value === 'playerVsComputer'){
+    if (gameMode.value === 'playerVsComputer') {
       playerTwoName.disabled = true;
-     
     }
-    if(gameMode.value === 'playerVsPlayer'){
+    if (gameMode.value === 'playerVsPlayer') {
       playerTwoName.disabled = false;
     }
   });
@@ -71,14 +65,13 @@ const Game = () => {
     playerOneName.value = '';
     playerTwoName.value = '';
   });
-  
+
   userForm.addEventListener('submit', () => {
-    if(gameMode.value === 'playerVsComputer'){
+    if (gameMode.value === 'playerVsComputer') {
       playerOneTitle.textContent = playerOneName.value;
       computerTitle.textContent = computer.name;
       message.textContent = `${playerOneName.value} place your ships please`;
     }
-
   });
 
   placeBtn.addEventListener('click', () => {
@@ -151,8 +144,6 @@ const Game = () => {
     }
   };
 
-
-
   // Function to generate a random number between 0 and 100 (both included)
   function getRandomNum() {
     return Math.floor(Math.random() * 100);
@@ -202,7 +193,9 @@ const Game = () => {
         e.target.style.backgroundImage = '';
         e.target.style.backgroundImage = `url(${touchedIcon})`;
         e.target.disabled = true;
-        [...playerBoardDom.children][positions.shift()].click();
+        setTimeout(() => {
+          [...playerBoardDom.children][positions.shift()].click();
+        },1000);
       }
 
       if (computerTurn) {
@@ -261,12 +254,51 @@ const Game = () => {
       } else {
         computerBoardDom.removeEventListener('click', playerAttackHandler);
         playerBoardDom.addEventListener('click', computerAttackHandler);
-        [...playerBoardDom.children][positions.shift()].click();
+        setTimeout(() => {
+          [...playerBoardDom.children][positions.shift()].click();
+        },1000);
       }
     }
   };
 
-  placeForm.addEventListener('submit', () => {
+  const updatePlayerBoardDom = () => {
+    console.log('Updating player board!');
+    playerData = [];
+    coords = [];
+    playerBoardDom.innerHTML = '';
+    for (let x = 0; x < 10; x += 1) {
+      for (let y = 0; y < 10; y += 1) {
+        playerData.push(playerBoard[x][y]);
+        coords.push([x, y]);
+      }
+    }
+    for (let i = 0; i < 100; i += 1) {
+      const pCell = document.createElement('button');
+
+      if (playerData[i] === 'water') {
+        pCell.classList.add('water');
+        pCell.style.backgroundImage = ` url(${waterIcon})`;
+      }
+
+      if (typeof playerData[i] === 'object') {
+        pCell.classList.add('water');
+        pCell.style.backgroundImage = ` url(${shipIcon})`;
+      }
+
+      if (playerData[i] === 'M') {
+        pCell.classList.add('water');
+        pCell.style.backgroundImage = `url(${waterIcon})`;
+      }
+      playerBoardDom.appendChild(pCell);
+      [...playerBoardDom.children][i].setAttribute('x', coords[i][0]);
+      [...playerBoardDom.children][i].setAttribute('y', coords[i][1]);
+    }
+  };
+
+  resetDom();
+
+  // Place player ships manually
+  placeForm.addEventListener('submit', (e) => {
     const carrierX = document.querySelector('#carrier-x');
     const carrierY = document.querySelector('#carrier-y');
     const carrierOrientation = document.querySelector('#carrier-orientation');
@@ -288,7 +320,7 @@ const Game = () => {
     const patrolX = document.querySelector('#patrol-x');
     const patrolY = document.querySelector('#patrol-y');
     const patrolOrientation = document.querySelector('#patrol-orientation');
-    
+
     if (
       player.board.placeShip(
         player.ships.carrier,
@@ -327,40 +359,40 @@ const Game = () => {
         +carrierY.value,
         carrierOrientation.value
       );
-      
+
       player.board.placeShip(
         player.ships.battleship,
         +battleshipX.value - 1,
         +battleshipY.value,
         battleshipOrientation.value
       );
-      
+
       player.board.placeShip(
         player.ships.destroyer,
         +destroyerX.value - 1,
         +destroyerY.value,
         destroyerOrientation.value
       );
-      
+
       player.board.placeShip(
         player.ships.submarine,
         +submarineX.value - 1,
         +submarineY.value,
         submarineOrientation.value
       );
-      
+
       player.board.placeShip(
         player.ships.patrolBoat,
         +patrolX.value - 1,
         +patrolY.value,
         patrolOrientation.value
       );
-     
-      resetDom();
+
+      updatePlayerBoardDom();
       console.table(playerBoard);
-     
-      
+      computerBoardDom.addEventListener('click', playerAttackHandler);
     } else {
+      e.preventDefault();
       alert('Bad positions try again !');
       carrierX.value = '';
       carrierY.value = '';
@@ -377,10 +409,14 @@ const Game = () => {
       patrolX.value = '';
       patrolY.value = '';
       patrolOrientation.value = '';
+      for(let i = 0; i < 10; i+=1){
+        for(let j = 0; j < 10; j+=1){
+          playerBoard[i][j] = 'water';
+        }
+      }
+      console.table(playerBoard);
     }
   });
-  resetDom();
-  computerBoardDom.addEventListener('click', playerAttackHandler);
 };
 
 export default Game;

@@ -8,11 +8,13 @@ html,
 body {
   width: 100%;
   height: 100vh;
-  background: linear-gradient(
-    0deg,
-    rgba(8, 0, 134, 1) 48%,
-    rgba(0, 198, 255, 1) 93%
-  );
+  background-color: rgba(17, 58, 116, 0.815);
+  background-image: url("../img/battleship.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-blend-mode: color-burn;
   overflow: hidden;
 }
 
@@ -30,15 +32,21 @@ body {
 }
 .message {
   font-family: Arial, Helvetica, sans-serif;
-  color: rgb(37, 50, 50);
+  color: #ffffff;
   font-size: 1.8rem;
   font-weight: 600;
   height: 8vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: justify;
 }
 h1.title {
   font-family: "Playwrite US Trad", cursive;
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   font-weight: 900;
+  color: #ffffff;
+  text-shadow: 10px 10px 10px #070529;
 }
 
 #footer {
@@ -81,7 +89,6 @@ span.author:hover {
 
 #game {
   width: 100%;
-  height: 80vh;
   display: flex;
   align-items: start;
   justify-content: space-evenly;
@@ -89,17 +96,21 @@ span.author:hover {
 }
 
 .player-container,
-.computer-container,.player-counter,.computer-counter {
+.computer-container,
+.player-counter,
+.computer-counter {
   display: flex;
   align-items: center;
   justify-content: start;
   flex-direction: column;
 }
 
-.player-title, .computer-title{
+.player-title,
+.computer-title {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.6rem;
   font-weight: 600;
+  color: #ffffff;
 }
 
 #player-board,
@@ -175,27 +186,208 @@ span.author:hover {
   background-color: red;
 }
 
-.player-container{
+.player-container {
   display: flex;
   flex-direction: column;
 }
 
-.player-counter{
+.player-counter {
   align-items: start;
-  gap:1em;
+  gap: 1em;
   margin-top: 4em;
 }
-.computer-counter{
+.computer-counter {
   align-items: end;
-  gap:1em;
+  gap: 1em;
   margin-top: 4em;
 }
-.counter{
+.counter {
   display: flex;
-  gap:.5em;
+  gap: 0.5em;
 }
-.square{
+.square {
   height: 1em;
   width: 1em;
-  background-color: #00ff0057;
+  background-color: #13e621;
+  border-radius: 20px 0 20px 0;
+}
+
+#user-dialog, #place-ship-dialog {
+  height: 60vh;
+  width: 40%;
+  overflow: hidden;
+  border: none;
+  position: relative;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 18px;
+}
+
+#user-form, #place-form {
+  font-family: "Niramit", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 1em;
+}
+
+#user-dialog::backdrop, #place-ship-dialog::backdrop {
+  background: linear-gradient(
+    53deg,
+    rgba(9, 0, 134, 0.625) 48%,
+    rgba(0, 198, 255, 1) 93%
+  );
+}
+
+.form-title {
+  font-size: 2rem;
+  text-align: center;
+  font-family: "Niramit", sans-serif;
+  font-weight: 700;
+}
+
+.select-group legend,.select-group  select,
+.text-group legend {
+  font-weight: 600;
+  font-size: 1.4rem;
+  padding: 0.6em;
+}
+
+.select-group,
+.text-group {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.6em;
+}
+
+.select-group label {
+  font-size: 1.3rem;
+  font-weight:300;
+}
+
+.text-group > label {
+  padding: 0.3em 0.3em;
+  font-size: 1.3rem;
+  font-weight:300;
+}
+
+.text-group > input {
+  width: 56%;
+  height: 4vh;
+  font-size: 1.3rem;
+  padding-left: 0.3em;
+  border-radius: 8px;
+}
+
+
+.buttons-group {
+  display: flex;
+  justify-content: end;
+  gap: 1em;
+}
+#reset,
+#start {
+  width: 8vw;
+  height: 4vh;
+  font-size: 1.3rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  border: none;
+}
+
+#reset {
+  background-color: #a82727;
+  color: #ffffff;
+}
+
+#start {
+  background-color: #49a827;
+  color: #ffffff;
+}
+
+#reset:hover {
+  background-color: #dc2222c1;
+  color: #000000;
+  transform: scale(0.9);
+}
+
+#start:hover {
+  background-color: #4de464;
+  color: #000000;
+  transform: scale(0.9);
+}
+
+.settings-logo{
+  height: 25px;
+  width: 25px;
+}
+.game-controllers{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  border: none;
+  height: 10vh;
+}
+
+.game-controllers > button{
+  width: 170px;
+  height: 50px;
+  font-family: "Niramit", sans-serif;
+  font-weight: 500;
+  font-size: 1.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+}
+.game-controllers > button:hover{
+  transform: scale(0.9);
+}
+
+#place-normal-ships{
+  background-color: #1ca986;
+  color: #ffffff;
+}
+
+#place-random-ships{
+  background-color: #1d4bf0;
+  color: #ffffff;
+}
+
+#reset-game{
+  background-color: #ff0000b2;
+  color: #ffffff;
+}
+
+.ship-wheel-icon, .movie-roll-icon, .power-off-icon{
+  height: 3vh;
+  width: 3vw;
+}
+
+.ship-features-container, .ship-features-container select, .ship-features-container input {
+  font-size: 1.5rem;
+}
+
+.btn-container{
+  display: flex;
+  justify-content: center;
+}
+
+#confirm{
+  width: 100px;
+  height: 40px;
+  font-size: 1.5rem;
+  border: none;
+  background-color: #1ca986;
+  color:#ffffff;
+  border-radius: 6px;
+  cursor: pointer;
 }

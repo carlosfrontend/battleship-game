@@ -17,10 +17,11 @@ const Game = () => {
   const playerBoard = player.createGameBoard();
   const computerBoard = computer.createGameBoard();
   let playerData = [];
-  const computerData = [];
+  let computerData = [];
   let coords = [];
   let playerTurn = true;
   let computerTurn = true;
+
   const message = document.querySelector('.message');
   const computerCounter = [
     ...document.querySelectorAll('.computer-counter>.counter'),
@@ -43,6 +44,7 @@ const Game = () => {
   const placeForm = document.querySelector('#place-form');
   const resetUserForm = document.querySelector('#reset');
   const gameMode = document.querySelector('#game-opt');
+  const cancelBtn = document.querySelector('#cancel');
 
   settingsImg.src = settingsLogo;
   shipWheelImg.src = shipWheelLogo;
@@ -84,11 +86,75 @@ const Game = () => {
   player.board.placeShip(player.ships.submarine, 9, 2, 'horizontal');
   player.board.placeShip(player.ships.patrolBoat, 4, 3, 'vertical'); */
 
-  computer.board.placeShip(computer.ships.carrier, 1, 3, 'horizontal');
-  computer.board.placeShip(computer.ships.battleship, 3, 9, 'vertical');
-  computer.board.placeShip(computer.ships.destroyer, 6, 6, 'vertical');
-  computer.board.placeShip(computer.ships.submarine, 5, 2, 'horizontal');
-  computer.board.placeShip(computer.ships.patrolBoat, 2, 0, 'vertical');
+  const placeRandomShips = (entity) => {
+    const ships = Object.values(entity.ships);
+    let xRandomArray = [];
+    let yRandomArray = [];
+    const orientations = ['horizontal', 'vertical'];
+    let orientationsArray = [];
+
+    for (let i = 0; i < ships.length; i += 1) {
+      xRandomArray.push(Math.floor(Math.random() * 10));
+      yRandomArray.push(Math.floor(Math.random() * 10));
+      orientationsArray.push(orientations[Math.floor(Math.random() * 2)]);
+    }
+
+    while (
+      entity.board.placeShip(
+        ships[0],
+        xRandomArray[0],
+        yRandomArray[0],
+        orientationsArray[0]
+      ) === false &&
+      entity.board.placeShip(
+        ships[1],
+        xRandomArray[1],
+        yRandomArray[1],
+        orientationsArray[1]
+      ) === false &&
+      entity.board.placeShip(
+        ships[2],
+        xRandomArray[2],
+        yRandomArray[2],
+        orientationsArray[2]
+      ) === false &&
+      entity.board.placeShip(
+        ships[3],
+        xRandomArray[3],
+        yRandomArray[3],
+        orientationsArray[3]
+      ) === false &&
+      entity.board.placeShip(
+        ships[4],
+        xRandomArray[4],
+        yRandomArray[4],
+        orientationsArray[4]
+      ) === false
+    ) {
+      xRandomArray = [];
+      yRandomArray = [];
+      orientationsArray = [];
+      for (let i = 0; i < ships.length; i += 1) {
+        xRandomArray.push(Math.floor(Math.random() * 10));
+        yRandomArray.push(Math.floor(Math.random() * 10));
+        orientationsArray.push(orientations[Math.floor(Math.random() * 2)]);
+      }
+    }
+    for (let i = 0; i < ships.length; i += 1) {
+      entity.board.placeShip(
+        ships[i],
+        xRandomArray[i],
+        yRandomArray[i],
+        orientationsArray[i]
+      );
+    }
+    console.log(ships);
+    console.log(xRandomArray);
+    console.log(yRandomArray);
+    console.log(orientationsArray);
+  };
+
+
 
   const resetDom = () => {
     playerBoardDom.innerHTML = '';
@@ -127,7 +193,7 @@ const Game = () => {
 
       if (typeof computerData[i] === 'object') {
         cCell.classList.add('water');
-        cCell.style.backgroundImage = `url(${waterIcon})`;
+        cCell.style.backgroundImage = `url(${shipIcon})`;
       }
 
       if (computerData[i] === 'M') {
@@ -143,7 +209,6 @@ const Game = () => {
       [...computerBoardDom.children][i].setAttribute('y', coords[i][1]);
     }
   };
-
   // Function to generate a random number between 0 and 100 (both included)
   function getRandomNum() {
     return Math.floor(Math.random() * 100);
@@ -178,8 +243,7 @@ const Game = () => {
         const index = shipsArray.indexOf(shipData);
 
         if (
-          shipData.name === 'Carrier' ||
-          shipData.name === 'Battleship' ||
+          (shipData.name === 'Carrier' && shipData.name === 'Battleship') ||
           shipData.name === 'Destroyer' ||
           shipData.name === 'Submarine' ||
           shipData.name === 'Patrol Boat'
@@ -195,7 +259,7 @@ const Game = () => {
         e.target.disabled = true;
         setTimeout(() => {
           [...playerBoardDom.children][positions.shift()].click();
-        },1000);
+        }, 1000);
       }
 
       if (computerTurn) {
@@ -256,7 +320,7 @@ const Game = () => {
         playerBoardDom.addEventListener('click', computerAttackHandler);
         setTimeout(() => {
           [...playerBoardDom.children][positions.shift()].click();
-        },1000);
+        }, 1000);
       }
     }
   };
@@ -295,7 +359,45 @@ const Game = () => {
     }
   };
 
+  const updateComputerBoardDom = () => {
+    console.log('Updating computer board!');
+    computerData = [];
+    coords = [];
+    computerBoardDom.innerHTML = '';
+    for (let x = 0; x < 10; x += 1) {
+      for (let y = 0; y < 10; y += 1) {
+        computerData.push(computerBoard[x][y]);
+        coords.push([x, y]);
+      }
+    }
+    for (let i = 0; i < 100; i += 1) {
+      const cCell = document.createElement('button');
+
+      if (computerData[i] === 'water') {
+        cCell.classList.add('water');
+        cCell.style.backgroundImage = ` url(${waterIcon})`;
+      }
+
+      if (typeof computerData[i] === 'object') {
+        cCell.classList.add('water');
+        cCell.style.backgroundImage = ` url(${shipIcon})`;
+      }
+
+      if (computerData[i] === 'M') {
+        cCell.classList.add('water');
+        cCell.style.backgroundImage = `url(${waterIcon})`;
+      }
+      computerBoardDom.appendChild(cCell);
+      [...computerBoardDom.children][i].setAttribute('x', coords[i][0]);
+      [...computerBoardDom.children][i].setAttribute('y', coords[i][1]);
+    }
+  };
+
+  placeRandomShips(computer);
+  console.table(computerBoard);
   resetDom();
+
+  // updateComputerBoardDom();
 
   // Place player ships manually
   placeForm.addEventListener('submit', (e) => {
@@ -387,7 +489,15 @@ const Game = () => {
         +patrolY.value,
         patrolOrientation.value
       );
-
+      /*   computer.board.placeShip(computer.ships.carrier, 1, 3, 'horizontal');
+      computer.board.placeShip(computer.ships.battleship, 3, 9, 'vertical');
+      computer.board.placeShip(computer.ships.destroyer, 6, 6, 'vertical');
+      computer.board.placeShip(computer.ships.submarine, 5, 2, 'horizontal');
+      computer.board.placeShip(computer.ships.patrolBoat, 2, 0, 'vertical'); */
+      /*   placeRandomShip(computer); */
+      /*   placeRandomShips(computer);
+      // updateComputerBoardDom(); */
+      // console.table(computerBoard);
       updatePlayerBoardDom();
       console.table(playerBoard);
       computerBoardDom.addEventListener('click', playerAttackHandler);
@@ -396,7 +506,7 @@ const Game = () => {
       alert('Bad positions try again !');
       carrierX.value = '';
       carrierY.value = '';
-      carrierOrientation.value = 'Horizontal';
+      carrierOrientation.value = '';
       battleshipX.value = '';
       battleshipY.value = '';
       battleshipOrientation.value = '';
@@ -409,13 +519,16 @@ const Game = () => {
       patrolX.value = '';
       patrolY.value = '';
       patrolOrientation.value = '';
-      for(let i = 0; i < 10; i+=1){
-        for(let j = 0; j < 10; j+=1){
+      for (let i = 0; i < 10; i += 1) {
+        for (let j = 0; j < 10; j += 1) {
           playerBoard[i][j] = 'water';
         }
       }
       console.table(playerBoard);
     }
+  });
+  cancelBtn.addEventListener('click', () => {
+    placeShipDialog.close();
   });
 };
 

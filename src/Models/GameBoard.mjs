@@ -93,6 +93,7 @@ const GameBoard = () => {
     placeShip,
     receiveAttack,
     allShipsSunk,
+    canPlaceShip,
     get board() {
       return board;
     },

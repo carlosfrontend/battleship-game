@@ -379,6 +379,7 @@ span.author:hover {
 .btn-container{
   display: flex;
   justify-content: center;
+  gap: 1em;
 }
 
 #confirm{
@@ -387,6 +388,17 @@ span.author:hover {
   font-size: 1.5rem;
   border: none;
   background-color: #1ca986;
+  color:#ffffff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#cancel{
+  width: 100px;
+  height: 40px;
+  font-size: 1.5rem;
+  border: none;
+  background-color: #a9281c;
   color:#ffffff;
   border-radius: 6px;
   cursor: pointer;

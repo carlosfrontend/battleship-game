@@ -73,6 +73,7 @@ const Game = () => {
   userForm.addEventListener('submit', () => {
     if (gameMode.value === 'playerVsComputer') {
       playerOneTitle.textContent = playerOneName.value;
+      player.name = playerOneName.value;
       computerTitle.textContent = computer.name;
       message.textContent = `${playerOneName.value} place your ships please`;
     }

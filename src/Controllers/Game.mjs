@@ -239,6 +239,9 @@ const Game = () => {
     }
     if (player.board.allShipsSunk()) {
       message.textContent = `${computer.name} Wins!`;
+      // eslint-disable-next-line no-use-before-define
+      computerBoardDom.removeEventListener('click', playerAttackHandler);
+      playerBoardDom.removeEventListener('click',computerAttackHandler);
     }
   };
 
@@ -278,6 +281,8 @@ const Game = () => {
         e.target.disabled = true;
         if (computer.board.allShipsSunk()) {
           message.textContent = `${player.name} Wins!`;
+          playerBoardDom.removeEventListener('click',computerAttackHandler);
+          computerBoardDom.removeEventListener('click', playerAttackHandler);
         }
         return;
       }

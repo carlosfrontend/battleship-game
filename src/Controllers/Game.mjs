@@ -45,6 +45,8 @@ const Game = () => {
   const resetUserForm = document.querySelector('#reset');
   const gameMode = document.querySelector('#game-opt');
   const cancelBtn = document.querySelector('#cancel');
+  const randomBtn = document.querySelector('#place-random-ships');
+  const resetGameBtn = document.querySelector('#reset-game');
 
   settingsImg.src = settingsLogo;
   shipWheelImg.src = shipWheelLogo;
@@ -79,12 +81,6 @@ const Game = () => {
   placeBtn.addEventListener('click', () => {
     placeShipDialog.showModal();
   });
-
-  /*  player.board.placeShip(player.ships.carrier, 0, 0, 'horizontal');
-  player.board.placeShip(player.ships.battleship, 4, 9, 'vertical');
-  player.board.placeShip(player.ships.destroyer, 2, 6, 'vertical');
-  player.board.placeShip(player.ships.submarine, 9, 2, 'horizontal');
-  player.board.placeShip(player.ships.patrolBoat, 4, 3, 'vertical'); */
 
   const placeRandomShips = (entity) => {
     const ships = Object.values(entity.ships);
@@ -161,7 +157,7 @@ const Game = () => {
 
       if (typeof computerData[i] === 'object') {
         cCell.classList.add('water');
-        cCell.style.backgroundImage = `url(${shipIcon})`;
+        cCell.style.backgroundImage = `url(${waterIcon})`;
       }
 
       if (computerData[i] === 'M') {
@@ -196,11 +192,13 @@ const Game = () => {
 
   const computerAttackHandler = (e) => {
     e.stopPropagation();
+    message.textContent = `${computer.name}'s turn!`;
     if (e.target.closest('.water')) {
       const x = +e.target.getAttribute('x');
       const y = +e.target.getAttribute('y');
       player.board.receiveAttack(x, y);
       if (playerBoard[x][y] === 'M') {
+        message.textContent = `${player.name}'s turn!`;
         computerTurn = false;
         e.target.style.backgroundImage = '';
         e.target.style.backgroundImage = `url(${missedIcon})`;
@@ -211,7 +209,7 @@ const Game = () => {
         const index = shipsArray.indexOf(shipData);
 
         if (
-          (shipData.name === 'Carrier' && shipData.name === 'Battleship') ||
+          (shipData.name === 'Carrier' || shipData.name === 'Battleship') ||
           shipData.name === 'Destroyer' ||
           shipData.name === 'Submarine' ||
           shipData.name === 'Patrol Boat'
@@ -245,11 +243,13 @@ const Game = () => {
 
   const playerAttackHandler = (e) => {
     e.stopPropagation();
+    randomBtn.disabled = true;
     if (e.target.closest('.water')) {
       const x = +e.target.getAttribute('x');
       const y = +e.target.getAttribute('y');
       computer.board.receiveAttack(x, y);
       if (computerBoard[x][y] === 'M') {
+        message.textContent = `${computer.name}'s turn!`;
         playerTurn = false;
         e.target.style.backgroundImage = '';
         e.target.style.backgroundImage = ` url(${missedIcon})`;
@@ -296,8 +296,8 @@ const Game = () => {
   const updatePlayerBoardDom = () => {
     console.log('Updating player board!');
     playerData = [];
-    coords = [];
     playerBoardDom.innerHTML = '';
+    coords = [];
     for (let x = 0; x < 10; x += 1) {
       for (let y = 0; y < 10; y += 1) {
         playerData.push(playerBoard[x][y]);
@@ -365,7 +365,20 @@ const Game = () => {
   console.table(computerBoard);
   resetDom();
 
-  // updateComputerBoardDom();
+  randomBtn.addEventListener('click', () => {
+    placeBtn.disabled = true;
+    for(let i = 0; i < 10; i+=1){
+      for(let j = 0; j < 10; j+=1){
+        playerBoard[i][j] = 'water';
+      }
+    }
+    placeRandomShips(player);
+    updatePlayerBoardDom();
+    console.table(playerBoard);
+    message.textContent = `${player.name}'s turn!`;
+    computerBoardDom.addEventListener('click', playerAttackHandler);
+    
+  });
 
   // Place player ships manually
   placeForm.addEventListener('submit', (e) => {
@@ -457,16 +470,9 @@ const Game = () => {
         +patrolY.value,
         patrolOrientation.value
       );
-      /*   computer.board.placeShip(computer.ships.carrier, 1, 3, 'horizontal');
-      computer.board.placeShip(computer.ships.battleship, 3, 9, 'vertical');
-      computer.board.placeShip(computer.ships.destroyer, 6, 6, 'vertical');
-      computer.board.placeShip(computer.ships.submarine, 5, 2, 'horizontal');
-      computer.board.placeShip(computer.ships.patrolBoat, 2, 0, 'vertical'); */
-      /*   placeRandomShip(computer); */
-      /*   placeRandomShips(computer);
-      // updateComputerBoardDom(); */
-      // console.table(computerBoard);
+      message.textContent = `${player.name}'s turn!`;
       updatePlayerBoardDom();
+      randomBtn.disabled = true;
       console.table(playerBoard);
       computerBoardDom.addEventListener('click', playerAttackHandler);
     } else {
@@ -497,6 +503,10 @@ const Game = () => {
   });
   cancelBtn.addEventListener('click', () => {
     placeShipDialog.close();
+  });
+
+  resetGameBtn.addEventListener('click', () => {
+    window.location.reload();
   });
 };
 

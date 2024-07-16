@@ -99,62 +99,30 @@ const Game = () => {
       orientationsArray.push(orientations[Math.floor(Math.random() * 2)]);
     }
 
-    while (
-      entity.board.placeShip(
-        ships[0],
-        xRandomArray[0],
-        yRandomArray[0],
-        orientationsArray[0]
-      ) === false &&
-      entity.board.placeShip(
-        ships[1],
-        xRandomArray[1],
-        yRandomArray[1],
-        orientationsArray[1]
-      ) === false &&
-      entity.board.placeShip(
-        ships[2],
-        xRandomArray[2],
-        yRandomArray[2],
-        orientationsArray[2]
-      ) === false &&
-      entity.board.placeShip(
-        ships[3],
-        xRandomArray[3],
-        yRandomArray[3],
-        orientationsArray[3]
-      ) === false &&
-      entity.board.placeShip(
-        ships[4],
-        xRandomArray[4],
-        yRandomArray[4],
-        orientationsArray[4]
-      ) === false
-    ) {
-      xRandomArray = [];
-      yRandomArray = [];
-      orientationsArray = [];
-      for (let i = 0; i < ships.length; i += 1) {
-        xRandomArray.push(Math.floor(Math.random() * 10));
-        yRandomArray.push(Math.floor(Math.random() * 10));
-        orientationsArray.push(orientations[Math.floor(Math.random() * 2)]);
+    ships.forEach((ship, index) => {
+      while (
+        entity.board.canPlaceShip(
+          ship.health,
+          xRandomArray[index],
+          yRandomArray[index],
+          orientationsArray[index]
+        ) !== true
+      ) {
+        xRandomArray = [];
+        yRandomArray = [];
+        orientationsArray = [];
+        xRandomArray[index] = Math.floor(Math.random() * 10);
+        yRandomArray[index] = Math.floor(Math.random() * 10);
+        orientationsArray[index] = orientations[Math.floor(Math.random() * 2)];
       }
-    }
-    for (let i = 0; i < ships.length; i += 1) {
       entity.board.placeShip(
-        ships[i],
-        xRandomArray[i],
-        yRandomArray[i],
-        orientationsArray[i]
+        ship,
+        xRandomArray[index],
+        yRandomArray[index],
+        orientationsArray[index]
       );
-    }
-    console.log(ships);
-    console.log(xRandomArray);
-    console.log(yRandomArray);
-    console.log(orientationsArray);
+    });
   };
-
-
 
   const resetDom = () => {
     playerBoardDom.innerHTML = '';

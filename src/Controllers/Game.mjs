@@ -17,7 +17,7 @@ const Game = () => {
   const playerBoard = player.createGameBoard();
   const computerBoard = computer.createGameBoard();
   let playerData = [];
-  let computerData = [];
+  const computerData = [];
   let coords = [];
   let playerTurn = true;
   let computerTurn = true;
@@ -54,7 +54,7 @@ const Game = () => {
   powerOffImg.src = powerOffLogo;
   userDialog.showModal();
 
-  playerTwoName.disabled = true;
+  /*   playerTwoName.disabled = true;
 
   gameMode.addEventListener('change', () => {
     if (gameMode.value === 'playerVsComputer') {
@@ -63,7 +63,7 @@ const Game = () => {
     if (gameMode.value === 'playerVsPlayer') {
       playerTwoName.disabled = false;
     }
-  });
+  }); */
 
   resetUserForm.addEventListener('click', () => {
     playerOneName.value = '';
@@ -300,7 +300,7 @@ const Game = () => {
   };
 
   const updatePlayerBoardDom = () => {
-    console.log('Updating player board!');
+    // console.log('Updating player board!');
     playerData = [];
     playerBoardDom.innerHTML = '';
     coords = [];
@@ -333,7 +333,7 @@ const Game = () => {
     }
   };
 
-  const updateComputerBoardDom = () => {
+  /*   const updateComputerBoardDom = () => {
     console.log('Updating computer board!');
     computerData = [];
     coords = [];
@@ -365,10 +365,10 @@ const Game = () => {
       [...computerBoardDom.children][i].setAttribute('x', coords[i][0]);
       [...computerBoardDom.children][i].setAttribute('y', coords[i][1]);
     }
-  };
+  }; */
 
   placeRandomShips(computer);
-  console.table(computerBoard);
+  // console.table(computerBoard);
   resetDom();
 
   randomBtn.addEventListener('click', () => {
@@ -380,7 +380,7 @@ const Game = () => {
     }
     placeRandomShips(player);
     updatePlayerBoardDom();
-    console.table(playerBoard);
+    // console.table(playerBoard);
     message.textContent = `${player.name}'s turn!`;
     computerBoardDom.addEventListener('click', playerAttackHandler);
     
@@ -476,10 +476,11 @@ const Game = () => {
         +patrolY.value,
         patrolOrientation.value
       );
+      placeBtn.disabled = true;
       message.textContent = `${player.name}'s turn!`;
       updatePlayerBoardDom();
       randomBtn.disabled = true;
-      console.table(playerBoard);
+      // console.table(playerBoard);
       computerBoardDom.addEventListener('click', playerAttackHandler);
     } else {
       e.preventDefault();
@@ -504,7 +505,7 @@ const Game = () => {
           playerBoard[i][j] = 'water';
         }
       }
-      console.table(playerBoard);
+      // console.table(playerBoard);
     }
   });
   cancelBtn.addEventListener('click', () => {

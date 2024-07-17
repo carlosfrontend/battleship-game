@@ -212,8 +212,7 @@ span.author:hover {
   border-radius: 20px 0 20px 0;
 }
 
-#user-dialog, #place-ship-dialog {
-  height: 60vh;
+#user-dialog {
   width: 40%;
   overflow: hidden;
   border: none;
@@ -221,6 +220,15 @@ span.author:hover {
   top: 20%;
   left: 50%;
   transform: translateX(-50%);
+  border-radius: 18px;
+}
+
+#place-ship-dialog {
+  overflow: hidden;
+  border: none;
+  position: relative;
+  top: 20%;
+  left: 50%;
   border-radius: 18px;
 }
 

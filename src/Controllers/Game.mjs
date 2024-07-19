@@ -35,7 +35,7 @@ const Game = () => {
   const settingsImg = document.querySelector('.settings-logo');
   const userForm = document.querySelector('#user-form');
   const playerOneName = document.querySelector('#name-one');
-  const playerTwoName = document.querySelector('#name-two');
+  // const playerTwoName = document.querySelector('#name-two');
   const shipWheelImg = document.querySelector('.ship-wheel-icon');
   const movieRollImg = document.querySelector('.movie-roll-icon');
   const powerOffImg = document.querySelector('.power-off-icon');
@@ -47,6 +47,7 @@ const Game = () => {
   const cancelBtn = document.querySelector('#cancel');
   const randomBtn = document.querySelector('#place-random-ships');
   const resetGameBtn = document.querySelector('#reset-game');
+  const gameControllers = document.querySelectorAll('.game-controllers>button');
 
   settingsImg.src = settingsLogo;
   shipWheelImg.src = shipWheelLogo;
@@ -67,15 +68,20 @@ const Game = () => {
 
   resetUserForm.addEventListener('click', () => {
     playerOneName.value = '';
-    playerTwoName.value = '';
+    // playerTwoName.value = '';
   });
 
   userForm.addEventListener('submit', () => {
     if (gameMode.value === 'playerVsComputer') {
+      for(let i = 0; i < gameControllers.length; i+=1){
+        gameControllers[i].style.opacity = '1';
+        gameControllers[i].style.transform = 'translateY(0)';
+      }
       playerOneTitle.textContent = playerOneName.value;
       player.name = playerOneName.value;
       computerTitle.textContent = computer.name;
       message.textContent = `${playerOneName.value} place your ships please`;
+      message.style.fontSize = '1.8rem';
     }
   });
 

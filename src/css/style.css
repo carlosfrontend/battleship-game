@@ -26,20 +26,23 @@ body {
 }
 
 .messages-box {
+  position: relative;
   display: flex;
   justify-content: center;
   height: auto;
+  z-index: 2;
 }
 .message {
   font-family: Arial, Helvetica, sans-serif;
   color: #ffffff;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: 600;
   height: 8vh;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: justify;
+  transition: font-size 0.3s ease-out 0s;
 }
 h1.title {
   font-family: "Playwrite US Trad", cursive;
@@ -232,7 +235,8 @@ span.author:hover {
   border-radius: 18px;
 }
 
-#user-form, #place-form {
+#user-form,
+#place-form {
   font-family: "Niramit", sans-serif;
   display: flex;
   flex-direction: column;
@@ -240,7 +244,8 @@ span.author:hover {
   padding: 1em;
 }
 
-#user-dialog::backdrop, #place-ship-dialog::backdrop {
+#user-dialog::backdrop,
+#place-ship-dialog::backdrop {
   background: linear-gradient(
     53deg,
     rgba(9, 0, 134, 0.625) 48%,
@@ -255,7 +260,8 @@ span.author:hover {
   font-weight: 700;
 }
 
-.select-group legend,.select-group  select,
+.select-group legend,
+.select-group select,
 .text-group legend {
   font-weight: 600;
   font-size: 1.4rem;
@@ -273,13 +279,13 @@ span.author:hover {
 
 .select-group label {
   font-size: 1.3rem;
-  font-weight:300;
+  font-weight: 300;
 }
 
 .text-group > label {
   padding: 0.3em 0.3em;
   font-size: 1.3rem;
-  font-weight:300;
+  font-weight: 300;
 }
 
 .text-group > input {
@@ -289,7 +295,6 @@ span.author:hover {
   padding-left: 0.3em;
   border-radius: 8px;
 }
-
 
 .buttons-group {
   display: flex;
@@ -306,6 +311,11 @@ span.author:hover {
   border-radius: 4px;
   font-weight: 500;
   border: none;
+  transition:
+    transform 0.15s,
+    background-color 0.3s,
+    color 0.06s 0.15s,
+    ease-out 0.25s;
 }
 
 #reset {
@@ -321,20 +331,20 @@ span.author:hover {
 #reset:hover {
   background-color: #dc2222c1;
   color: #000000;
-  transform: scale(0.9);
+  transform: scale(1.1);
 }
 
 #start:hover {
   background-color: #4de464;
   color: #000000;
-  transform: scale(0.9);
+  transform: scale(1.1);
 }
 
-.settings-logo{
+.settings-logo {
   height: 25px;
   width: 25px;
 }
-.game-controllers{
+.game-controllers {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -343,7 +353,8 @@ span.author:hover {
   height: 10vh;
 }
 
-.game-controllers > button{
+.game-controllers > button {
+  position: relative;
   width: 170px;
   height: 50px;
   font-family: "Niramit", sans-serif;
@@ -355,59 +366,84 @@ span.author:hover {
   cursor: pointer;
   border: none;
   border-radius: 10px;
-}
-.game-controllers > button:hover{
-  transform: scale(0.9);
+  transform: translateY(-800px);
+  transition: transform 0.3s ease-out 0.15s;
+  transition: opacity 0.3a ease-out 0.15s;
+  will-change: transform;
+  z-index: 1;
 }
 
-#place-normal-ships{
+
+
+button#place-normal-ships {
   background-color: #1ca986;
   color: #ffffff;
 }
 
-#place-random-ships{
+button#place-normal-ships:hover {
+  background-color: #1ca986a3;
+  color: #ffffff;
+  font-weight: bold;
+}
+button#place-random-ships {
   background-color: #1d4bf0;
   color: #ffffff;
 }
 
-#reset-game{
+button#place-random-ships:hover {
+  background-color: rgba(30, 75, 241, 0.647);
+  color: #ffffff;
+  font-weight: bold;
+}
+
+button#reset-game {
   background-color: #ff0000b2;
   color: #ffffff;
 }
+button#reset-game:hover {
+  background-color: hsla(0, 100%, 50%, 0.488);
+  color: #ffffff;
+  font-weight: bold;
+}
 
-.ship-wheel-icon, .movie-roll-icon, .power-off-icon{
+
+.ship-wheel-icon,
+.movie-roll-icon,
+.power-off-icon {
   height: 3vh;
   width: 3vw;
 }
 
-.ship-features-container, .ship-features-container select, .ship-features-container input {
+.ship-features-container,
+.ship-features-container select,
+.ship-features-container input {
   font-size: 1.5rem;
 }
 
-.btn-container{
+.btn-container {
   display: flex;
   justify-content: center;
   gap: 1em;
 }
 
-#confirm{
+#confirm {
   width: 100px;
   height: 40px;
   font-size: 1.5rem;
   border: none;
   background-color: #1ca986;
-  color:#ffffff;
+  color: #ffffff;
   border-radius: 6px;
   cursor: pointer;
 }
 
-#cancel{
+#cancel {
   width: 100px;
   height: 40px;
   font-size: 1.5rem;
   border: none;
   background-color: #a9281c;
-  color:#ffffff;
+  color: #ffffff;
   border-radius: 6px;
   cursor: pointer;
 }

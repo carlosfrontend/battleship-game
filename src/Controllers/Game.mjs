@@ -53,7 +53,29 @@ const Game = () => {
   shipWheelImg.src = shipWheelLogo;
   movieRollImg.src = movieRollLogo;
   powerOffImg.src = powerOffLogo;
-  userDialog.showModal();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const onlyDesktopDiv = document.createElement('div');
+    onlyDesktopDiv.style.display = 'flex';
+    onlyDesktopDiv.style.flexDirection = 'row';
+    onlyDesktopDiv.style.justifyContent = 'center';
+    onlyDesktopDiv.style.height = '100vh';
+    onlyDesktopDiv.style.width = '100%';
+    onlyDesktopDiv.style.position = 'absolute';
+    onlyDesktopDiv.style.background = 'white';
+    onlyDesktopDiv.style.top = '0';
+    onlyDesktopDiv.style.alignItems = 'center';
+    onlyDesktopDiv.setAttribute('id', 'onlyDesktop');
+    if (window.innerWidth < 1024) {
+      document.body.append(onlyDesktopDiv);
+      onlyDesktopDiv.textContent = 'You can play on your laptop or PC.';
+    }else{
+      userDialog.showModal();
+
+    }
+  
+  });
+  
 
   /*   playerTwoName.disabled = true;
 
